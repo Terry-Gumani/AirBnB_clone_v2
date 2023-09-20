@@ -5,8 +5,9 @@ from datetime import datetime
 from models import storage
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DATETIME
+from models import storage_type
 
-Base = declarative_base()
+Base = declarative_base() if storage_type == 'db' else object
 
 class BaseModel:
     """
@@ -17,25 +18,36 @@ class BaseModel:
         created_at (sqlalchemy DateTime):
         updated_at (sqlalchemy DateTime):
     """
-
-    id = Column(String(60), nullable=False, primary_key=True, unique=True)
-    created_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
+    if models.storage_type == "db":
+        id = Column(String(60), nullable=False, primary_key=True, unique=True)
+        created_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
+        updated_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model"""
-        if not kwargs:
-            from models import storage
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+        """Initialization of the base model"""
+        if kwargs:
+            for k, v in kwargs.items():
+                if k != "__class__":
+                    setattr(self, k, v)
+
+            t_fmt = "%Y-%m-%dT%H:%M:%S.%f"
+
+            if bool(kwargs.get("created_at")) and type(self.created_at) is str:
+                self.created_at = datetime.strptime(kwargs["created_at"], t_fmt)
+            else:
+                self.created_at = datetime.utcnow()
+
+            if bool(kwargs.get("updated_at")) and type(self.updated_at) is str:
+                self.updated_at = datetime.strptime(kwargs["updated_at"], t_fmt)
+            else:
+                self.updated_at = datetime.utcnow()
+
+            if not bool(kwargs.get("id")):
+                self.id = str(uuid.uuid4())
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """Returns a string representation of the instance"""
