@@ -9,6 +9,7 @@ from models import storage_type
 
 Base = declarative_base() if storage_type == 'db' else object
 
+
 class BaseModel:
     """
     A base class for all hbnb models
@@ -20,8 +21,12 @@ class BaseModel:
     """
     if models.storage_type == "db":
         id = Column(String(60), nullable=False, primary_key=True, unique=True)
-        created_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
-        updated_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
+        created_at = Column(DATETIME,
+                            nullable=False,
+                            default=datetime.utcnow())
+        updated_at = Column(DATETIME,
+                            nullable=False,
+                            default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -30,15 +35,15 @@ class BaseModel:
                 if k != "__class__":
                     setattr(self, k, v)
 
-            t_fmt = "%Y-%m-%dT%H:%M:%S.%f"
+            tfmt = "%Y-%m-%dT%H:%M:%S.%f"
 
             if bool(kwargs.get("created_at")) and type(self.created_at) is str:
-                self.created_at = datetime.strptime(kwargs["created_at"], t_fmt)
+                self.created_at = datetime.strptime(kwargs["created_at"], tfmt)
             else:
                 self.created_at = datetime.utcnow()
 
             if bool(kwargs.get("updated_at")) and type(self.updated_at) is str:
-                self.updated_at = datetime.strptime(kwargs["updated_at"], t_fmt)
+                self.updated_at = datetime.strptime(kwargs["updated_at"], tfmt)
             else:
                 self.updated_at = datetime.utcnow()
 
