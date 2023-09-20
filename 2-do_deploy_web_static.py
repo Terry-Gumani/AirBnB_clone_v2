@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# Fabfile to distribute an archive to a web server.
+#2-do_deploy_web_static.py
+
 import os.path
 from fabric.api import env
 from fabric.api import put
