@@ -46,10 +46,10 @@ class DBStorage:
         """close session"""
         self.__session.remove()
 
-    def reload(self):
-        """Reloads the database"""
-        Base.metadata.create_all(self.__engine)
+    # def reload(self):
+    #     """Reloads the database"""
+    #     Base.metadata.create_all(self.__engine)
 
-    def all(self):
-        """Returns a list of all objects in the database"""
-        return session.query(Base).all()
+    # def all(self):
+    #     """Returns a list of all objects in the database"""
+    #     return session.query(Base).all()
