@@ -17,3 +17,13 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 class DBStorage:
     """A class to manage DB storage via MYSQL and SQLAlchemy"""
+    def __init__(self):
+        """Constructor for DBStorage"""
+
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(getenv('HBNB_MYSQL_USER'),
+                                             getenv('HBNB_MYSQL_PWD'),
+                                             getenv('HBNB_MYSQL_HOST'),
+                                             getenv('HBNB_MYSQL_DB')))
+        if getenv('HBNB_ENV')
+            Base.metadata.drop_all(self.__engine)
