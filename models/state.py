@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from models import storage_type
 from models.city import city
 from sqlalchemy import Column, String
+from models import storage_type
 
 
 class State(BaseModel, Base):
