@@ -46,9 +46,16 @@ class DBStorage:
         """close session"""
         self.__session.remove()
 
-    # def reload(self):
-    #     """Reloads the database"""
-    #     Base.metadata.create_all(self.__engine)
+    def reload(self):
+        """Reloads the database"""
+        Base.metadata.create_all(self.__engine)
+
+    def reload(self):
+        """reloads data from the database"""
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
+        self.__session = Session
 
     # def all(self):
     #     """Returns a list of all objects in the database"""
