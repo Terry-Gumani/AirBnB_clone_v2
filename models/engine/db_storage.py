@@ -29,11 +29,24 @@ class DBStorage:
         if getenv('HBNB_ENV')
             Base.metadata.drop_all(self.__engine)
 
+    def new(self, obj):
+        """add new object"""
+        self.__session.add(obj)
+
+    def save(self):
+        """commit changes"""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """delete from db"""
+        if obj is not None:
+            self.__session.delete(obj)
+
+    def close(self):
+        """close session"""
+        self.__session.remove()
+
 #    def all(self, cls=None):
-
-#    def new(self, obj):
-
-#    def save(self):
 
 #    def delete(self, obj=None):
 
