@@ -27,3 +27,15 @@ class DBStorage:
                                              getenv('HBNB_MYSQL_DB')))
         if getenv('HBNB_ENV')
             Base.metadata.drop_all(self.__engine)
+
+#    def all(self, cls=None):
+
+#    def new(self, obj):
+
+#    def save(self):
+
+#    def delete(self, obj=None):
+
+#    def reload(self):
+
+#    def close(self):
