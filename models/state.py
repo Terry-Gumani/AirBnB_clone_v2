@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
+import models
 from models.base_model import BaseModel, Base
-from models import storage_type
+# from models import storage_type
 from models.city import city
 from sqlalchemy import Column, String
-from models import storage_type
+# from models import storage_type
 
 
 class State(BaseModel, Base):
     """ State class/ table model """
     __tablename__ = 'states'
 
-    name = Column(String(128), nullable=False) if storage_type == 'db' else ""
+    name = Column(String(128), nullable=False) if models.storage_t == 'db' else ""
 
         @property
         def cities(self):

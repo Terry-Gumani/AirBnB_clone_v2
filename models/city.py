@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ City Module for HBNB project """
+import models
 from models.base_model import BaseModel
 from sqlalchemy import Column, String, ForeignKey
-from models import storage_type
+# from models import storage_type
 
 
 class City(BaseModel):
