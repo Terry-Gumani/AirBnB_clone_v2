@@ -52,4 +52,4 @@ class DBStorage:
 
     def all(self):
         """Returns a list of all objects in the database"""
-        return session.query(Base).all(
+        return session.query(Base).all()
